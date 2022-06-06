@@ -6,3 +6,5 @@ class Card():
 
     def print_card(self):
         print(f"{self.group} {self.suites} {self.color}")
+    
+      

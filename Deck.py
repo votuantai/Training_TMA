@@ -1,6 +1,6 @@
 from Card import Card
 import random as rd
-from msilib.schema import Error 
+from msilib.schema import Error
 class Deck():
     def __init__(self):
         self.cards = []
@@ -32,7 +32,7 @@ class Deck():
             return draw
         except Error:
             print("Error at drawCard")
-            
+        
     def show(self):
         for card in self.cards:
             card.print_card()
