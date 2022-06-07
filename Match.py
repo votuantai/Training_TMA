@@ -1,4 +1,5 @@
 from aifc import Error
+from traceback import print_tb
 from Card import Card
 from Customer import Customer
 from House import House
@@ -9,26 +10,34 @@ from Deck import Deck
 class Match:
     def __init__(self, score = -25):
         self.score = score
-
+        self.round = 0
+        
     def play(self):
         deck = Deck()
         deck.shuffle()
         deck.show()
         ##Customer
-        cardOfCustomer = Customer('Bod')
-        cardOfCustomer.print_player()
+        player = Customer('Bod')
+        player.print_player()
         card1 = deck.drawCard()
-        cardOfCustomer.draw(card1)
-        cardOfCustomer.showhand()
+        player.draw(card1)
+        player.showhand()
         ##House
-        cardOfHouse = House()
+        house = House()
         card2 = deck.drawCard()
-        cardOfHouse.draw(card2)
-        cardOfHouse.print_house()
-        cardOfHouse.showhand()
-        self.compare(card1, card2)
+        house.draw(card2)
+        house.print_house()
+        house.showhand()
         
-    def compare(self, card1, card2):
+        ''' compare = self.compareCard(card1, card2)
+        if compare == True:
+            player.score += 20
+        else: player.score -= 20
+        player.print_player()
+        print(compare) '''
+    
+ 
+    def compareCard(self, card1, card2):
         cardShow1 = card1
         cardShow2 = card2
         
@@ -82,13 +91,20 @@ class Match:
             print("Can't Convert")
         
         if int(card1.group) > int(card2.group):
-            print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}")
+            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
+            return True
         elif (int(card1.group) == int(card2.group)) and (int(card1.suites) > int(card2.suites)):
-            print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}")
+            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
+            return True
         elif  int(card1.group) < int(card2.group):
-            print (f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}")
+            ''' print (f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
+            return False
         elif int(card1.suites) == 0 and f"{card1.color}" is 'Red' and int(card2.suites) == 0 and f"{card2.color}" is 'Black':
-            print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}")
-        else: print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}")
+            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
+            return True
+        else: 
+            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
+            return False
+        
 
         

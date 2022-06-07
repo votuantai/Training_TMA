@@ -1,10 +1,9 @@
 from Player import Player
 
-
 class Customer(Player):
-    def __init__(self, name, score = 60):
+    def __init__(self, name):
+        self.score = 60
         self.name = name
-        self.score = score
         self.hand = []
 
     def draw(self, card):
@@ -14,5 +13,11 @@ class Customer(Player):
         for card in self.hand:
             print(f"{card.group} {card.suites} {card.color}")
 
+    def setScore(self, score):
+        self.score += score
+        
+    def getScore(self):
+        return self.score
+
     def print_player(self):
-        print(f"Player Name: {self.name} // Score: {self.score}")
+        print(f"Player Name: {self.name} // Score: {self.score} ")
