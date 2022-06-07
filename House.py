@@ -6,8 +6,8 @@ class House(Player):
         self.name = name
         self.hand = []
     
-    def draw(self, deck):
-        return self.hand.append(deck.drawCard())
+    def draw(self, card):
+        return self.hand.append(card)
     
     def showhand(self):
         for card in self.hand:

@@ -7,8 +7,8 @@ class Customer(Player):
         self.score = score
         self.hand = []
 
-    def draw(self, deck):
-        return self.hand.append(deck.drawCard())
+    def draw(self, card):
+        return self.hand.append(card)
     
     def showhand(self):
         for card in self.hand:
