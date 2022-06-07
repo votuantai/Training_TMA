@@ -1,5 +1,4 @@
 from Card import Card
-from Card import Card
 from Customer import Customer
 from House import House
 from Deck import Deck
