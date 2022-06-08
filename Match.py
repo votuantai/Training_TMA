@@ -1,41 +1,85 @@
+
 from aifc import Error
 from traceback import print_tb
 from Card import Card
-from Customer import Customer
-from House import House
 from Deck import Deck
 ##from OrderedEum import OrderedEnum
 
 
 class Match:
-    def __init__(self, score = -25):
+    def __init__(self, player, house, score = -25):
+        self.player = player
+        self.house = house
         self.score = score
         self.round = 0
         
     def play(self):
         deck = Deck()
         deck.shuffle()
-        deck.show()
-        ##Customer
-        player = Customer('Bod')
-        player.print_player()
-        card1 = deck.drawCard()
-        player.draw(card1)
-        player.showhand()
-        ##House
-        house = House()
-        card2 = deck.drawCard()
-        house.draw(card2)
-        house.print_house()
-        house.showhand()
         
-        ''' compare = self.compareCard(card1, card2)
-        if compare == True:
-            player.score += 20
-        else: player.score -= 20
-        player.print_player()
-        print(compare) '''
-    
+        ## Player
+        card1 = deck.drawCard()
+        self.player.draw(card1)
+        self.player.showhand()
+        
+        ## House
+        card2 = deck.drawCard()
+        self.house.draw(card2)
+        self.house.showhand()
+        while True:
+            self.round += 1
+            if self.round > 0:
+                self.player.setScore(self.score)
+            
+            self.player.print_player()
+            compare = self.compareCard(card1, card2)
+            deck.setPutAgain(card1, card2)
+            print(compare)
+            if compare == True:
+                self.player.print_player()
+                self.player.setShowHand()
+                self.house.setShowHand()
+                while input("Do you wanna continue? y(yes)/n(no):  ") == 'y':
+                    self.round += 1
+                    deck.shuffle()
+                    deck.show()
+                    
+                    cardContinue1 = deck.drawCard()
+                    self.house.draw(cardContinue1)
+                    self.house.showhand()
+                    self.house.setShowHand()
+                    
+                    cardContinue2 = deck.drawCard()
+                    self.player.draw(cardContinue2)
+                    self.player.showhand()
+                    self.player.setShowHand()
+                    
+                    compare = self.compareCard(cardContinue1, cardContinue2)
+                    deck.setPutAgain(cardContinue1, cardContinue2)
+                    print(compare)
+                    if compare == True:
+                        self.player.setScore(20*2)
+                        self.player.print_player()
+                        if self.player.getScore() > 1000:
+                            print("YOU WIN")
+                            break
+                    else:
+                        self.player.setScore(-20)
+                        self.player.print_player()
+                        if self.player.getScore() < 30: 
+                            print("YOU LOSE")
+                            break
+                self.round -= 1
+            if self.round == 0:
+                self.player.setScore(20)
+                self.player.print_player()
+                break
+            else: 
+                self.player.print_player()
+                break
+            
+            
+        
  
     def compareCard(self, card1, card2):
         cardShow1 = card1
@@ -99,7 +143,7 @@ class Match:
         elif  int(card1.group) < int(card2.group):
             ''' print (f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return False
-        elif int(card1.suites) == 0 and f"{card1.color}" is 'Red' and int(card2.suites) == 0 and f"{card2.color}" is 'Black':
+        elif int(card1.suites) == 0 and f"{card1.color}" == 'Red' and int(card2.suites) == 0 and f"{card2.color}" == 'Black':
             ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return True
         else: 

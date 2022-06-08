@@ -6,5 +6,9 @@ class Player(ABC):
         pass
     
     @abstractmethod
+    def setShowHand(self):
+        pass
+    
+    @abstractmethod
     def showhand(self):
         pass

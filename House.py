@@ -9,6 +9,9 @@ class House(Player):
     def draw(self, card):
         return self.hand.append(card)
     
+    def setShowHand(self):
+        return self.hand.clear()
+    
     def showhand(self):
         for card in self.hand:
             print(f"{card.group} {card.suites} {card.color}")

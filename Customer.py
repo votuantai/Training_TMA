@@ -12,7 +12,10 @@ class Customer(Player):
     def showhand(self):
         for card in self.hand:
             print(f"{card.group} {card.suites} {card.color}")
-
+            
+    def setShowHand(self):
+        return self.hand.clear()
+    
     def setScore(self, score):
         self.score += score
         
@@ -20,4 +23,4 @@ class Customer(Player):
         return self.score
 
     def print_player(self):
-        print(f"Player Name: {self.name} // Score: {self.score} ")
+        print(f"Player Name: {self.name} // Score: {self.getScore()} ")

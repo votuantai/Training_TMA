@@ -32,6 +32,10 @@ class Deck():
             return draw
         except Error:
             print("Error at drawCard")
+            
+    def setPutAgain(self, card1, card2):
+        self.cards.append(card1)
+        self.cards.append(card2)
         
     def show(self):
         for card in self.cards:
