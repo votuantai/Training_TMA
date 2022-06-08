@@ -14,7 +14,7 @@ class House(Player):
     
     def showhand(self):
         for card in self.hand:
-            print(f"{card.group} {card.suites} {card.color}")
+            print(f"House's card: {card.group} {card.suites} {card.color}")
     
     def print_house(self):
         print("House Name:", self.name)

@@ -1,6 +1,4 @@
-
 from aifc import Error
-from traceback import print_tb
 from Card import Card
 from Deck import Deck
 ##from OrderedEum import OrderedEnum
@@ -20,7 +18,6 @@ class Match:
         ## Player
         card1 = deck.drawCard()
         self.player.draw(card1)
-        self.player.showhand()
         
         ## House
         card2 = deck.drawCard()
@@ -30,45 +27,47 @@ class Match:
             self.round += 1
             if self.round > 0:
                 self.player.setScore(self.score)
-            
             self.player.print_player()
+            Guess = input("Enter 'l' (Large) or 's' (Small): ")
             compare = self.compareCard(card1, card2)
-            deck.setPutAgain(card1, card2)
-            print(compare)
-            if compare == True:
+            if (compare == True and Guess == 'l') or (compare == False and Guess == 's'):
                 self.player.print_player()
+                self.player.showhand()
                 self.player.setShowHand()
                 self.house.setShowHand()
+                deck.setPutAgain(card1, card2)
                 while input("Do you wanna continue? y(yes)/n(no):  ") == 'y':
                     self.round += 1
                     deck.shuffle()
-                    deck.show()
                     
-                    cardContinue1 = deck.drawCard()
-                    self.house.draw(cardContinue1)
+                    cardContinue2 = deck.drawCard()
+                    self.house.draw(cardContinue2)
                     self.house.showhand()
                     self.house.setShowHand()
                     
-                    cardContinue2 = deck.drawCard()
-                    self.player.draw(cardContinue2)
-                    self.player.showhand()
-                    self.player.setShowHand()
+                    cardContinue1 = deck.drawCard()
+                    self.player.draw(cardContinue1)
                     
+                    guess = input("Enter 'l' (Large) or 's' (Small): ")
                     compare = self.compareCard(cardContinue1, cardContinue2)
-                    deck.setPutAgain(cardContinue1, cardContinue2)
-                    print(compare)
-                    if compare == True:
+                    
+                    if (compare == True and guess == 'l') or (compare == False and guess == 's'):
                         self.player.setScore(20*2)
                         self.player.print_player()
+                        self.player.showhand()
+                        self.player.setShowHand()
                         if self.player.getScore() > 1000:
                             print("YOU WIN")
                             break
                     else:
                         self.player.setScore(-20)
                         self.player.print_player()
+                        self.player.showhand()
+                        self.player.setShowHand()
                         if self.player.getScore() < 30: 
                             print("YOU LOSE")
                             break
+                    deck.setPutAgain(cardContinue1, cardContinue2)
                 self.round -= 1
             if self.round == 0:
                 self.player.setScore(20)
@@ -76,14 +75,13 @@ class Match:
                 break
             else: 
                 self.player.print_player()
+                self.player.showhand()
                 break
             
             
         
  
     def compareCard(self, card1, card2):
-        cardShow1 = card1
-        cardShow2 = card2
         
         try:
             match f"{card1.group}":
@@ -135,19 +133,14 @@ class Match:
             print("Can't Convert")
         
         if int(card1.group) > int(card2.group):
-            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return True
         elif (int(card1.group) == int(card2.group)) and (int(card1.suites) > int(card2.suites)):
-            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return True
         elif  int(card1.group) < int(card2.group):
-            ''' print (f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return False
         elif int(card1.suites) == 0 and f"{card1.color}" == 'Red' and int(card2.suites) == 0 and f"{card2.color}" == 'Black':
-            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} > {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return True
         else: 
-            ''' print(f"{cardShow1.group} {cardShow1.suites} {cardShow1.color} < {cardShow2.group} {cardShow2.suites} {cardShow2.color}") '''
             return False
         
 

@@ -11,7 +11,7 @@ class Customer(Player):
     
     def showhand(self):
         for card in self.hand:
-            print(f"{card.group} {card.suites} {card.color}")
+            print(f"Player's card: {card.group} {card.suites} {card.color}")
             
     def setShowHand(self):
         return self.hand.clear()
