@@ -1,7 +1,15 @@
-from aifc import Error
+from __future__ import barry_as_FLUFL
 from Card import Card
 from Deck import Deck
-##from OrderedEum import OrderedEnum
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+
+def logging_error(msg):
+    def logging_cus():
+       return logging.error('Error at: %s' %msg)
+    return logging_cus()
+
 
 
 class Match:
@@ -28,7 +36,9 @@ class Match:
             if self.round > 0:
                 self.player.setScore(self.score)
             self.player.print_player()
+            
             Guess = input("Enter 'l' (Large) or 's' (Small): ")
+            
             compare = self.compareCard(card1, card2)
             if (compare == True and Guess == 'l') or (compare == False and Guess == 's'):
                 self.player.print_player()
@@ -126,8 +136,8 @@ class Match:
                     card2 = Card(card2.group, int("21"), card2.color)
                 case '':
                     card2 = Card(card2.group, int("0"), card2.color)
-        except Error:
-            print("Can't Convert")
+        except Exception:
+            print(logging_error('cards convert'))
         
         if int(card1.group) > int(card2.group):
             return True
