@@ -1,4 +1,3 @@
-from __future__ import barry_as_FLUFL
 from Card import Card
 from Deck import Deck
 import logging
@@ -10,14 +9,13 @@ def logging_error(msg):
        return logging.error('Error at: %s' %msg)
     return logging_cus()
 
-
-
 class Match:
     def __init__(self, player, house, score = -25):
         self.player = player
         self.house = house
         self.score = score
         self.round = 0
+        self.Guess = ''
         
     def play(self):
         deck = Deck()
@@ -37,10 +35,10 @@ class Match:
                 self.player.setScore(self.score)
             self.player.print_player()
             
-            Guess = input("Enter 'l' (Large) or 's' (Small): ")
+            self.Guess = input("Enter 'l' (Large) or 's' (Small): ")
             
             compare = self.compareCard(card1, card2)
-            if (compare == True and Guess == 'l') or (compare == False and Guess == 's'):
+            if (compare == True and self.Guess == 'l') or (compare == False and self.Guess == 's'):
                 self.player.print_player()
                 self.player.showhand()
                 self.player.setShowHand()
@@ -58,10 +56,10 @@ class Match:
                     cardContinue1 = deck.drawCard()
                     self.player.draw(cardContinue1)
                     
-                    guess = input("Enter 'l' (Large) or 's' (Small): ")
+                    self.Guess = input("Enter 'l' (Large) or 's' (Small): ")
                     compare = self.compareCard(cardContinue1, cardContinue2)
                     
-                    if (compare == True and guess == 'l') or (compare == False and guess == 's'):
+                    if (compare == True and self.Guess == 'l') or (compare == False and self.Guess == 's'):
                         self.player.setScore(20*2)
                         self.player.print_player()
                         self.player.showhand()
