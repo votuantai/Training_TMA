@@ -16,6 +16,7 @@ class Match:
         self.score = score
         self.round = 0
         self.Guess = ''
+        self.decide = ''
         
     def play(self):
         deck = Deck()
@@ -44,8 +45,12 @@ class Match:
                 self.player.setShowHand()
                 self.house.setShowHand()
                 deck.setPutAgain(card1, card2)
-                while input("Do you wanna continue? y(yes)/n(no):  ") == 'y':
+                self.decide = input("Do you wanna continue? y(yes)/n(no):  ") 
+                while self.decide == 'y':
                     self.round += 1
+                    
+                    if self.round > 0:
+                        self.player.setScore(self.score)
                     deck.shuffle()
                     
                     cardContinue2 = deck.drawCard()
@@ -67,12 +72,7 @@ class Match:
                         if self.player.getScore() > 1000:
                             print("YOU WIN")
                             break
-                    else:
-                        self.player.setScore(-20)
-                        self.player.print_player()
-                        self.player.showhand()
-                        self.player.setShowHand()
-                        if self.player.getScore() < 30: 
+                    elif self.player.getScore() < 30: 
                             print("YOU LOSE")
                             break
                     deck.setPutAgain(cardContinue1, cardContinue2)
